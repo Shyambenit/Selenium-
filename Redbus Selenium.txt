@@ -1,0 +1,58 @@
+
+package org.example;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+ class Redbus {
+    public static void main(String[] args) throws InterruptedException {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        driver.get("https://www.redbus.in/");
+
+        WebElement sourceElement = driver.findElement(By.xpath("//input[@id='src']"));
+        sourceElement.sendKeys("tambaram");
+
+        WebElement destinationElement = driver.findElement(By.xpath("//input[@id='dest']"));
+        destinationElement.sendKeys("kerala");
+
+        WebElement dateElement = driver.findElement(By.xpath("//text[@class='dateText']"));
+        dateElement.click();
+
+        WebElement dateToSelect = driver.findElement(By.xpath("//div[text()='Jul']/following::span[text()='18']"));
+        dateToSelect.click();
+
+        Thread.sleep(1000);
+
+        WebElement searchButton = driver.findElement(By.xpath("//button[@id='search_button']"));
+        searchButton.click();
+        searchButton.click();
+
+        Thread.sleep(2000);
+
+        WebElement closeButton = driver.findElement(By.xpath("//i[@class='icon-close coach-close']"));
+        closeButton.click();
+
+        WebElement viewSeatsButton = driver.findElement(By.xpath("(//div[text()='View Seats'])[1]"));
+        viewSeatsButton.click();
+
+        boolean seatSelectingPageDisplayed = verifySeatSelectingPage(driver);
+        System.out.println("Seat selecting page displayed: " + seatSelectingPageDisplayed);
+
+        driver.quit();
+    }
+
+    public static boolean verifySeatSelectingPage(WebDriver driver) {
+        WebElement verify = driver.findElement(By.xpath("//span[@class='seatSelMsg']"));
+        return verify.isDisplayed();
+    }
+}
+
+
+
+
+
